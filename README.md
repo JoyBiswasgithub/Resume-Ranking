@@ -1,95 +1,80 @@
 # Resume Ranking System
 
-This project is a Flask web application that ranks resumes based on their similarity to a provided job description using a pre-trained BERT model. The application allows users to upload either a single resume or a folder containing multiple resumes, along with a job description, and then ranks the resumes based on their relevance to the job description.
+## Overview
+
+This Flask application provides a solution for ranking resumes based on their similarity to a job description. It leverages BERT (Bidirectional Encoder Representations from Transformers) embeddings to compare and rank resumes. 
+
+## Working Principle
+
+1. **Text Extraction:**
+   - **Resume:** Users upload a resume in PDF format. The application extracts the text content from the PDF using the PyPDF2 library.
+   - **Job Description:** Users input a job description as plain text.
+
+2. **Text Preprocessing:**
+   - Both the resume text and the job description are preprocessed to lower case and stripped of extra whitespace.
+
+3. **BERT Embeddings:**
+   - The preprocessed text of the resume and job description is converted into embeddings using the pre-trained BERT model. BERT is a transformer-based model that captures contextual relationships between words in a text.
+
+4. **Similarity Calculation:**
+   - The embeddings for both the resume and the job description are compared using cosine similarity. Cosine similarity measures the angle between two vectors in the embedding space, providing a score that indicates how similar the two texts are.
+
+5. **Ranking:**
+   - The similarity score is calculated and displayed, representing how well the resume matches the job description. A higher score indicates a better match.
 
 ## Features
 
-- **Single Resume Mode**: Upload a single resume and a job description to get a similarity score.
-- **Multiple Resumes Mode**: Upload a folder containing multiple resumes and a job description to rank all the resumes.
-- **Shortlisting Option**: Choose the number of top resumes to display from the ranked list.
+- **Single Resume and Job Description:** Users can upload a single PDF resume and provide a job description. The application calculates a similarity score and displays it along with the resume name.
 
-## Tech Stack
+## Use Cases
 
-- **Backend**: Flask, Python, PyTorch, Transformers (BERT)
-- **Frontend**: HTML, CSS, JavaScript
-- **File Handling**: PyPDF2 for PDF text extraction
+1. **Job Matching:**
+   - **Scenario:** A recruiter receives a job description and a candidate's resume. The recruiter wants to quickly assess how well the resume matches the job description.
+   - **Use:** Upload the resume and job description to get a similarity score that helps in evaluating the candidate's fit for the job.
+
+2. **Automated Resume Screening:**
+   - **Scenario:** A company receives multiple resumes for a job opening and needs to shortlist candidates based on how closely their resumes match the job description.
+   - **Use:** Upload individual resumes and job descriptions to obtain similarity scores, helping in the initial screening process.
+
+3. **Personal Career Development:**
+   - **Scenario:** A job seeker wants to tailor their resume to better match a specific job description before submitting it.
+   - **Use:** Upload the job description and their resume to see how well their current resume aligns with the job requirements and make improvements accordingly.
+
+## Requirements
+
+- Python 3.6+
+- Flask
+- Transformers
+- Torch
+- PyPDF2
+- Scikit-learn
 
 ## Installation
 
-### Prerequisites
-
-- Python 3.7 or higher
-- Virtualenv (optional but recommended)
-
-### Steps
-
-1. **Create a virtual environment** (optional but recommended):
+1. **Install dependencies:**
 
     ```bash
-    python3 -m venv venv
-    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+    pip install flask transformers torch PyPDF2 scikit-learn
     ```
-
-2. **Install the dependencies**:
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-3. **Download the pre-trained BERT model and tokenizer**:
-
-    Before running the application, download and save the pre-trained BERT model and tokenizer:
-
-    ```python
-    from transformers import BertTokenizer, BertModel
-
-    tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-    model = BertModel.from_pretrained('bert-base-uncased')
-
-    tokenizer.save_pretrained('model/bert_tokenizer')
-    model.save_pretrained('model/bert_model')
-    ```
-
-4. **Run the Flask application**:
-
-    ```bash
-    python app.py
-    ```
-
-5. **Access the web application**:
-
-    Open your web browser and go to `http://127.0.0.1:5000/`.
 
 ## Usage
 
-1. **Single Resume Mode**:
-   - Select "Single Resume and Job Description".
-   - Upload a resume in PDF format.
-   - Enter the job description in the text area.
-   - Click "Submit" to see the similarity score.
+1. **Single Resume and Job Description:**
 
-2. **Multiple Resumes Mode**:
-   - Select "Multiple Resumes and Job Description".
-   - Upload a folder containing multiple resumes (ensure they are all in PDF format).
-   - Enter the job description in the text area.
-   - Optionally, specify the number of top resumes you want to shortlist.
-   - Click "Submit" to see the ranked list of resumes.
+    - On the main page, upload a single PDF resume.
+    - Enter the job description text.
+    - Submit the form to see the similarity rank of the resume.
 
-## Project Structure
+## Example
 
-```plaintext
-resume-ranking-system/
-├── app.py                     # Flask application
-├── static/
-│   ├── css/
-│   │   └── styles.css         # Stylesheets
-│   └── js/
-│       └── script.js          # JavaScript for toggling inputs
-├── templates/
-│   └── index.html             # HTML template for the web app
-├── model/
-│   ├── bert_model/            # Directory for the BERT model
-│   └── bert_tokenizer/        # Directory for the BERT tokenizer
-├── uploads/                   # Directory where uploaded files will be saved
-├── requirements.txt           # Python dependencies
-└── README.md                  # Project README file
+For single resume processing:
+- Upload a file named `resume.pdf`.
+- Enter a job description like "Software Engineer with experience in Python and Machine Learning."
+- After submission, you will see the similarity score displayed with the resume name.
+
+## Notes
+
+- Ensure that the resume file is in PDF format.
+- The job description should be a plain text.
+
+
