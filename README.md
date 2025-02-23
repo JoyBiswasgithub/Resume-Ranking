@@ -64,7 +64,7 @@ This Flask application provides a solution for ranking resumes based on their si
     - On the main page, upload a single PDF resume.
     - Enter the job description text.
     - Submit the form to see the similarity rank of the resume.
-
+    - 
 ## Example
 
 For single resume processing:
